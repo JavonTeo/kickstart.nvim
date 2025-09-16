@@ -2,9 +2,6 @@ return {
 'nvim-lualine/lualine.nvim',
 dependencies = { 'nvim-tree/nvim-web-devicons' },
 config = function()
--- TODO: 
--- put icons for mode
--- put icons for filetype
 local mode = {
    'mode',
       fmt = function(str)
