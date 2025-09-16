@@ -21,3 +21,7 @@ vim.o.autoindent = true -- Copy indent from current line when starting new one
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+-- TODO: when opening a new help, open to the right. Maybe use keymaps?
+vim.o.splitright = true
+vim.o.splitbelow = true
+
