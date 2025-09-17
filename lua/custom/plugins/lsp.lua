@@ -1,4 +1,5 @@
 return {
+{
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -275,5 +276,55 @@ return {
         },
       }
     end,
-}
+},
+{ -- formatters, linters
+	'nvimtools/none-ls.nvim',
+	dependencies = {
+			'nvimtools/none-ls-extras.nvim',
+			'jayp0521/mason-null-ls.nvim'
+	},
+	config = function ()
+		local null_ls = require 'null-ls'
+		local formatting = null_ls.builtins.formatting -- to setup formatters
+		local diagnostics = null_ls.builtins.diagnostics -- to setp linters
 
+		require('mason-null-ls').setup {
+			ensure_installed = {
+				'prettier', --ts/js formatter
+				'stylua', -- lua formatter
+				'eslint_d', -- ts/js linter
+				'ruff' -- Python linter and formatter
+			},
+			automatic_installation = true
+		}
+
+		local sources = {
+			formatting.prettier.with {filetypes = { 'html', 'json', 'yaml', 'markdown' }},
+			formatting.stylua,
+			require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
+			require 'none-ls.formatting.ruff_format',
+			}
+
+		-- this code sets up autoformatting on save
+		local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+		null_ls.setup {
+			debug = true, -- Enable debg mode. Inspect logs with :NullLsLog
+			sources = sources,
+			-- code that runs when null-ls attaches to a buffer
+			on_attach = function(client, bufnr)
+				if client:supports_method 'textDocument/formatting' then
+					vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr } -- clear duplicate autocmds
+					-- buffer is formatted before file actually gets written to disk
+					vim.api.nvim_create_autocmd('BufWritePre', {
+						group = augroup,
+						buffer = bufnr,
+						callback = function ()
+							vim.lsp.buf.format{async = false}
+						end,
+					})
+				end
+			end,
+            }
+	end,
+}
+}
