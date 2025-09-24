@@ -25,5 +25,7 @@ vim.o.smartcase = true
 vim.o.splitright = true
 vim.o.splitbelow = true
 
+vim.o.updatetime = 1000
+
 -- Configure shell
 vim.o.shell = '/bin/tmux'
