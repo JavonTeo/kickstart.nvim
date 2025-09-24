@@ -1,6 +1,5 @@
 return {
     {
-        -- Main LSP Configuration
         'neovim/nvim-lspconfig',
         dependencies = {
             -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -17,31 +16,6 @@ return {
             'saghen/blink.cmp',
         },
         config = function()
-            -- Brief aside: **What is LSP?**
-            --
-            -- LSP is an initialism you've probably heard, but might not understand what it is.
-            --
-            -- LSP stands for Language Server Protocol. It's a protocol that helps editors
-            -- and language tooling communicate in a standardized fashion.
-            --
-            -- In general, you have a "server" which is some tool built to understand a particular
-            -- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
-            -- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-            -- processes that communicate with some "client" - in this case, Neovim!
-            --
-            -- LSP provides Neovim with features like:
-            --  - Go to definition
-            --  - Find references
-            --  - Autocompletion
-            --  - Symbol Search
-            --  - and more!
-            --
-            -- Thus, Language Servers are external tools that must be installed separately from
-            -- Neovim. This is where `mason` and related plugins come into play.
-            --
-            -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-            -- and elegantly composed help section, `:help lsp-vs-treesitter`
-
             --  This function gets run when an LSP attaches to a particular buffer.
             --    That is to say, every time a new file is opened that is associated with
             --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -73,7 +47,7 @@ return {
                     map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
 
                     -- Find references for the word under your cursor.
-                    map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+                    map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
                     -- Jump to the implementation of the word under your cursor.
                     --  Useful when your language has ways of declaring types without an actual implementation.
@@ -86,7 +60,7 @@ return {
                     -- Jump to the definition of the word under your cursor.
                     --  This is where a variable was first declared, or where a function is defined, etc.
                     --  To jump back, press <C-t>.
-                    map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+                    map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
                     -- WARN: This is not Goto Definition, this is Goto Declaration.
                     --  For example, in C this would take you to the header.
@@ -245,18 +219,15 @@ return {
             local servers = {
                 -- clangd = {},
                 -- gopls = {},
-                pyright = {
-                    settings = {
-                        {
-                            python = {
-                                analysis = {
-                                    autoSearchPaths = true,
-                                    diagnosticMode = 'openFilesOnly',
-                                    useLibraryCodeForTypes = true,
-                                },
-                            },
+                basedpyright = {
+			analysis = {
+				autoSearchPaths = true,
+                                diagnosticMode = "openFilesOnly",
+                                useLibraryCodeForTypes = true,
+				inlayHints = {
+					callArgumentNames = true
+				},
                         },
-                    },
                 },
                 vue_ls = {},
                 html = {},
@@ -351,33 +322,33 @@ return {
                 automatic_installation = true,
             }
 
-            local sources = {
-                formatting.prettier.with { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
-                formatting.stylua,
-                require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
-                require 'none-ls.formatting.ruff_format',
-            }
+            -- local sources = {
+            --     formatting.prettier.with { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
+            --     formatting.stylua,
+            --     require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
+            --     require 'none-ls.formatting.ruff_format',
+            -- }
 
             -- this code sets up autoformatting on save
-            local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-            null_ls.setup {
-                debug = true, -- Enable debg mode. Inspect logs with :NullLsLog
-                sources = sources,
-                -- code that runs when null-ls attaches to a buffer
-                on_attach = function(client, bufnr)
-                    if client:supports_method 'textDocument/formatting' then
-                        vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr } -- clear duplicate autocmds
-                        -- buffer is formatted before file actually gets written to disk
-                        vim.api.nvim_create_autocmd('BufWritePre', {
-                            group = augroup,
-                            buffer = bufnr,
-                            callback = function()
-                                vim.lsp.buf.format { async = false }
-                            end,
-                        })
-                    end
-                end,
-            }
+            -- local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+            -- null_ls.setup {
+            --     debug = true, -- Enable debg mode. Inspect logs with :NullLsLog
+            --     sources = sources,
+            --     -- code that runs when null-ls attaches to a buffer
+            --     on_attach = function(client, bufnr)
+            --         if client:supports_method 'textDocument/formatting' then
+            --             vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr } -- clear duplicate autocmds
+            --             -- buffer is formatted before file actually gets written to disk
+            --             vim.api.nvim_create_autocmd('BufWritePre', {
+            --                 group = augroup,
+            --                 buffer = bufnr,
+            --                 callback = function()
+            --                     vim.lsp.buf.format { async = false }
+            --                 end,
+            --             })
+            --         end
+            --     end,
+            -- }
         end,
     },
 }

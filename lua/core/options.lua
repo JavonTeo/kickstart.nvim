@@ -7,13 +7,13 @@ vim.o.relativenumber = true
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 vim.schedule(function()
-	vim.o.clipboard = 'unnamedplus'
+    vim.o.clipboard = 'unnamedplus'
 end)
 
-vim.o.wrap = false      -- Display lines as one long line
-vim.o.linebreak = true  -- Companion to wrap, don't split words
+vim.o.wrap = false -- Display lines as one long line
+vim.o.linebreak = true -- Companion to wrap, don't split words
 
-vim.o.mouse = 'a'       -- Enable mouse mode
+vim.o.mouse = 'a' -- Enable mouse mode
 
 vim.o.autoindent = true -- Copy indent from current line when starting new one
 
@@ -25,7 +25,7 @@ vim.o.smartcase = true
 vim.o.splitright = true
 vim.o.splitbelow = true
 
-vim.o.updatetime = 1000
+vim.o.updatetime = 500
 
 -- Configure shell
 vim.o.shell = '/bin/tmux'
