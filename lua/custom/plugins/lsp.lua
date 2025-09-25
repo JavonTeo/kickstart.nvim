@@ -91,6 +91,11 @@ return {
                         '[G]oto [T]ype Definition'
                     )
 
+                    -- Manual formatting keymap
+                    map('<leader>f', function()
+                        vim.lsp.buf.format { async = true }
+                    end, '[F]ormat buffer')
+
                     -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
                     ---@param client vim.lsp.Client
                     ---@param method vim.lsp.protocol.Method
@@ -148,6 +153,19 @@ return {
                             end,
                         })
                     end
+
+                    -- -- AUTO-FORMATTING ON SAVE
+                    -- -- Comment out this entire block to disable auto-formatting
+                    -- if client and client_supports_method(client, "textDocument/formatting") then
+                    -- 	local format_augroup = vim.api.nvim_create_augroup("LspAutoFormat", { clear = false })
+                    -- 	vim.api.nvim_create_autocmd("BufWritePre", {
+                    -- 		buffer = event.buf,
+                    -- 		group = format_augroup,
+                    -- 		callback = function()
+                    -- 			vim.lsp.buf.format({ async = false })
+                    -- 		end,
+                    -- 	})
+                    -- end
 
                     -- The following code creates a keymap to toggle inlay hints in your
                     -- code, if the language server you are using supports them
@@ -220,14 +238,14 @@ return {
                 -- clangd = {},
                 -- gopls = {},
                 basedpyright = {
-			analysis = {
-				autoSearchPaths = true,
-                                diagnosticMode = "openFilesOnly",
-                                useLibraryCodeForTypes = true,
-				inlayHints = {
-					callArgumentNames = true
-				},
+                    analysis = {
+                        autoSearchPaths = true,
+                        diagnosticMode = 'openFilesOnly',
+                        useLibraryCodeForTypes = true,
+                        inlayHints = {
+                            callArgumentNames = true,
                         },
+                    },
                 },
                 vue_ls = {},
                 html = {},
@@ -301,54 +319,74 @@ return {
             }
         end,
     },
-    { -- formatters, linters
-        'nvimtools/none-ls.nvim',
-        dependencies = {
-            'nvimtools/none-ls-extras.nvim',
-            'jayp0521/mason-null-ls.nvim',
-        },
+    -- { -- formatters, linters
+    --     'nvimtools/none-ls.nvim',
+    --     dependencies = {
+    --         'nvimtools/none-ls-extras.nvim',
+    --         'jayp0521/mason-null-ls.nvim',
+    --     },
+    --     config = function()
+    --         local null_ls = require 'null-ls'
+    --         local formatting = null_ls.builtins.formatting -- to setup formatters
+    --         local diagnostics = null_ls.builtins.diagnostics -- to setp linters
+    --
+    --         require('mason-null-ls').setup {
+    --             ensure_installed = {
+    --                 'prettier', --ts/js formatter
+    --                 'stylua', -- lua formatter
+    --                 'eslint_d', -- ts/js linter
+    --                 'ruff', -- Python linter and formatter
+    --             },
+    --             automatic_installation = true,
+    --         }
+    --
+    --         local sources = {
+    --             formatting.prettier.with { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
+    --             formatting.stylua,
+    --             require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
+    --             require 'none-ls.formatting.ruff_format',
+    --         }
+    --
+    --         this code sets up autoformatting on save
+    --         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+    --         null_ls.setup {
+    --             debug = true, -- Enable debg mode. Inspect logs with :NullLsLog
+    --             sources = sources,
+    --             -- code that runs when null-ls attaches to a buffer
+    --             on_attach = function(client, bufnr)
+    --                 if client:supports_method 'textDocument/formatting' then
+    --                     vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr } -- clear duplicate autocmds
+    --                     -- buffer is formatted before file actually gets written to disk
+    --                     vim.api.nvim_create_autocmd('BufWritePre', {
+    --                         group = augroup,
+    --                         buffer = bufnr,
+    --                         callback = function()
+    --                             vim.lsp.buf.format { async = false }
+    --                         end,
+    --                     })
+    --                 end
+    --             end,
+    --         }
+    --     end,
+    -- },
+    { -- code folding
+        'kevinhwang91/nvim-ufo',
+        dependencies = 'kevinhwang91/promise-async',
         config = function()
-            local null_ls = require 'null-ls'
-            local formatting = null_ls.builtins.formatting -- to setup formatters
-            local diagnostics = null_ls.builtins.diagnostics -- to setp linters
+            vim.o.foldcolumn = '1'
+            vim.o.foldlevel = 99
+            vim.o.foldlevelstart = 99
+            vim.o.foldenable = true
 
-            require('mason-null-ls').setup {
-                ensure_installed = {
-                    'prettier', --ts/js formatter
-                    'stylua', -- lua formatter
-                    'eslint_d', -- ts/js linter
-                    'ruff', -- Python linter and formatter
-                },
-                automatic_installation = true,
+            vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+            vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+            -- Treesitter as folding provider
+            require('ufo').setup {
+                provider_selector = function(_, _, _)
+                    return { 'treesitter', 'indent' }
+                end,
             }
-
-            -- local sources = {
-            --     formatting.prettier.with { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
-            --     formatting.stylua,
-            --     require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
-            --     require 'none-ls.formatting.ruff_format',
-            -- }
-
-            -- this code sets up autoformatting on save
-            -- local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-            -- null_ls.setup {
-            --     debug = true, -- Enable debg mode. Inspect logs with :NullLsLog
-            --     sources = sources,
-            --     -- code that runs when null-ls attaches to a buffer
-            --     on_attach = function(client, bufnr)
-            --         if client:supports_method 'textDocument/formatting' then
-            --             vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr } -- clear duplicate autocmds
-            --             -- buffer is formatted before file actually gets written to disk
-            --             vim.api.nvim_create_autocmd('BufWritePre', {
-            --                 group = augroup,
-            --                 buffer = bufnr,
-            --                 callback = function()
-            --                     vim.lsp.buf.format { async = false }
-            --                 end,
-            --             })
-            --         end
-            --     end,
-            -- }
         end,
     },
 }
