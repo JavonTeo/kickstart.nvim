@@ -22,7 +22,7 @@ return {
 
 			map(
 				'n',
-				'<leader>gp',
+				'<leader>gh',
 				require('gitsigns').preview_hunk,
 				{ buffer = bufnr, desc = 'Preview git hunk' }
 			)
