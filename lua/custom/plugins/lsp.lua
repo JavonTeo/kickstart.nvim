@@ -189,8 +189,10 @@ return {
 					    and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
 					then
 						map("<leader>th", function()
-							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr =
-							event.buf }))
+							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({
+								bufnr =
+								    event.buf
+							}))
 						end, "[T]oggle Inlay [H]ints")
 					end
 				end,
@@ -344,41 +346,9 @@ return {
 				},
 			})
 
-			-- local vue_language_server_path = vim.fn.stdpath("data")
-			-- 	.. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
-			-- local tsserver_filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" }
-			-- local vue_plugin = {
-			-- 	name = "@vue/typescript-plugin",
-			-- 	location = vue_language_server_path,
-			-- 	languages = { "vue" },
-			-- 	configNamespace = "typescript",
-			-- }
-			-- local vtsls_config = {
-			-- 	settings = {
-			-- 		vtsls = {
-			-- 			tsserver = {
-			-- 				globalPlugins = {
-			-- 					vue_plugin,
-			-- 				},
-			-- 			},
-			-- 		},
-			-- 	},
-			-- 	filetypes = tsserver_filetypes,
-			-- }
-			--
-			-- local ts_ls_config = {
-			-- 	init_options = {
-			-- 		plugins = {
-			-- 			vue_plugin,
-			-- 		},
-			-- 	},
-			-- 	filetypes = tsserver_filetypes,
-			-- }
-			-- local vue_ls_config = {}
-			-- vim.lsp.config('vtsls', vtsls_config)
-			-- vim.lsp.config('vue_ls', vue_ls_config)
-			-- vim.lsp.config('ts_ls', ts_ls_config)
-			-- vim.lsp.enable({'vtsls', 'vue_ls'})
+			-- This sets the colors for the floating windows
+			-- (e.g. LSP function signature when you hover and <Shift-k> over a function, or telescope window)
+			vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#110147', fg = '#fffcea' })        -- floating window background color and font color
 		end,
 	},
 	-- { -- formatters, linters
