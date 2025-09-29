@@ -52,7 +52,7 @@ vim.keymap.set('n', '<leader>xs', ':close<CR>', opts) -- close current split win
 -- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Toggle line wrapping
-vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!,CR>')
+vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', function()
