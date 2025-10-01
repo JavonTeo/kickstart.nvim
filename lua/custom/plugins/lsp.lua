@@ -293,8 +293,7 @@ return {
 				},
 
 				ruff = {},
-				--
-
+				emmet_language_server = {},
 				lua_ls = {
 					-- cmd = { ... },
 					-- filetypes = { ... },
