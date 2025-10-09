@@ -72,7 +72,7 @@ return { -- Highlight, edit, and navigate code
 				},
 			},
 		},
-		-- indent = { enable = true, disable = { 'ruby' } },
+		indent = { enable = true, disable = { 'ruby' } },
 		incremental_selection = {
 			enable = true,
 			keymaps = {
