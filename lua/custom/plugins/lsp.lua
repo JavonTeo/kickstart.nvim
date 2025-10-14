@@ -64,6 +64,7 @@ return {
 					-- Manual formatting keymap
 					map("<leader>f", function()
 						vim.lsp.buf.format({ async = true })
+						vim.notify('File formatted.', vim .log.levels.INFO)
 					end, "[F]ormat buffer")
 
 					-- Toggle diagnostics (linting)
