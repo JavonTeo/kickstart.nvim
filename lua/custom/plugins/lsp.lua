@@ -230,7 +230,8 @@ return {
 					source = "if_many",
 					spacing = 2,
 					-- uncomment the line below to show ALL virtual text
-					severity = { min = vim.diagnostic.severity.ERROR }, -- only show virtual text for errors
+					severity = { vim.diagnostic.severity.ERROR }, -- only show virtual text for errors
+					-- severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN }, -- show virtual text for errors and warnings
 					format = function(diagnostic)
 						local diagnostic_message = {
 							[vim.diagnostic.severity.ERROR] = diagnostic.message,

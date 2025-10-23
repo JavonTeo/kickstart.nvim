@@ -15,7 +15,10 @@ vim.o.linebreak = true -- Companion to wrap, don't split words
 
 vim.o.mouse = 'a' -- Enable mouse mode
 
-vim.o.autoindent = true -- Copy indent from current line when starting new one
+vim.opt.tabstop = 4          -- number of spaces that <Tab> counts for
+vim.opt.shiftwidth = 4       -- number of spaces for each indent level
+vim.opt.smartindent = true   -- smart autoindenting on new lines
+vim.opt.autoindent = true    -- copy indent from current line when starting new one
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
