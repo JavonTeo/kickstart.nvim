@@ -209,7 +209,7 @@ return {
 
 				-- OPTION 2: Disable ALL diagnostics
 				-- Uncomment the line below to disable ALL diagnostics (including errors)
-				-- enabled = false,
+				enabled = false,
 
 				float = { border = "rounded", source = "if_many" },
 				underline = { severity = vim.diagnostic.severity.ERROR },
