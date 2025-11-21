@@ -67,16 +67,15 @@ return {
 						vim.notify('File formatted.', vim .log.levels.INFO)
 					end, "[F]ormat buffer")
 
-					-- Toggle diagnostics (linting)
+					-- Toggle global diagnostics (linting)
 					map("<leader>td", function()
-						local current_buf = vim.api.nvim_get_current_buf()
-						if vim.diagnostic.is_enabled({ bufnr = current_buf }) then
-							vim.diagnostic.enable(false, { bufnr = current_buf })
-							vim.notify("Diagnostics disabled for current buffer",
+						if vim.diagnostic.is_enabled() then
+							vim.diagnostic.enable(false)
+							vim.notify("Diagnostics disabled globally",
 								vim.log.levels.INFO)
 						else
-							vim.diagnostic.enable(true, { bufnr = current_buf })
-							vim.notify("Diagnostics enabled for current buffer",
+							vim.diagnostic.enable(true)
+							vim.notify("Diagnostics enabled globally",
 								vim.log.levels.INFO)
 						end
 					end, "[T]oggle [D]iagnostics")
@@ -209,7 +208,7 @@ return {
 
 				-- OPTION 2: Disable ALL diagnostics
 				-- Uncomment the line below to disable ALL diagnostics (including errors)
-				enabled = false,
+				-- enabled = false,
 
 				float = { border = "rounded", source = "if_many" },
 				underline = { severity = vim.diagnostic.severity.ERROR },

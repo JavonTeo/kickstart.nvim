@@ -32,3 +32,5 @@ vim.o.updatetime = 500
 
 -- Configure shell
 vim.o.shell = '/bin/tmux'
+
+vim.diagnostic.enable(false)
