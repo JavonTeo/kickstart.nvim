@@ -1,7 +1,19 @@
 return {
 	{
 		'nvim-lualine/lualine.nvim',
-		dependencies = { 'nvim-tree/nvim-web-devicons' },
+		dependencies = { 
+			{
+				'kiennt63/harpoon-files.nvim',
+				dependencies = { {'ThePrimeagen/harpoon', branch='harpoon2' } },
+				opts = {
+					icon = '',
+                    max_length = 7,
+                    separator_left = ' ',
+                    separator_right = '',
+                    reverse_order = true
+				},
+			},
+			'nvim-tree/nvim-web-devicons' },
 		config = function()
 			local mode = {
 				'mode',
@@ -10,6 +22,7 @@ return {
 					-- return ' ' .. str:sub(1, 1) -- displays only the first character of the mode
 				end,
 			}
+			local harpoon_files = require 'harpoon_files'
 			require('lualine').setup {
 				options = {
 					icons_enabled = true,
@@ -47,10 +60,10 @@ return {
 				},
 				sections = {
 					lualine_a = { mode },
-					lualine_b = { 'branch', 'diff', 'diagnostics' },
+					lualine_b = { 'branch', 'diff' },
 					lualine_c = { 'filename' },
-					lualine_x = { 'encoding', 'fileformat', 'filetype' },
-					lualine_y = { 'location' },
+					lualine_x = { harpoon_files.lualine_component },
+					lualine_y = { },
 					lualine_z = { 'progress' },
 				},
 				inactive_sections = {

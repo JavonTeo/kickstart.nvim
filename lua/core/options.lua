@@ -30,7 +30,6 @@ vim.o.splitbelow = true
 
 vim.o.updatetime = 500
 
--- Configure shell
-vim.o.shell = '/bin/tmux'
+vim.o.scrolloff = 20
 
 vim.diagnostic.enable(false)
