@@ -145,6 +145,16 @@ return {
 		vim.keymap.set('n', '<leader>b9', function() bufferline.go_to(9, true) end, { desc = '[B]uffer [9]' })
 		vim.keymap.set('n', '<leader>b$', function() bufferline.go_to(-1, true) end, { desc = '[B]uffer -1' })
 
+		-- vim.keymap.set('n', '<leader>bd1', function()
+		-- 	local bufs = bufferline.get_elements().elements
+		-- 	local target = bufs[1] and bufs[1].id
+		-- 	if target then
+		-- 		vim.api.nvim_buf_delete(target, { force = false })
+		-- 	end
+		-- end, { desc = '[B]uffer [D]elete [1]' })
+
+		vim.keymap.set('n', '<leader>bn', "<cmd>BufferLineCycleNext<CR>", { desc = '[B]uffer [N]ext' })
+		vim.keymap.set('n', '<leader>bp', "<cmd>BufferLineCyclePrev<CR>", { desc = '[B]uffer [P]rev' })
 		vim.keymap.set('n', '<leader>bco', bufferline.close_others, { desc = '[B]uffer [C]lose [O]thers' })
 	end,
 }
