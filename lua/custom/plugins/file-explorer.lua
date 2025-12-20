@@ -8,21 +8,21 @@ return {
 	keys = {
 		-- 👇 in this section, choose your own keymappings!
 		{
-			'<leader>-',
+			'<leader>y',
 			mode = { 'n', 'v' },
 			'<cmd>Yazi<cr>',
-			desc = 'Open yazi at the current file',
+			desc = '[Y]azi',
 		},
 		{
 			-- Open in the current working directory
-			'<leader>cw',
+			'<leader>ycd',
 			'<cmd>Yazi cwd<cr>',
-			desc = "Open the file manager in nvim's working directory",
+			desc = "[Y]azi current dir",
 		},
 		{
-			'<c-up>',
+			'<leader>yr',
 			'<cmd>Yazi toggle<cr>',
-			desc = 'Resume the last yazi session',
+			desc = '[Y]azi [R]esume last session',
 		},
 	},
 	---@type YaziConfig | {}
