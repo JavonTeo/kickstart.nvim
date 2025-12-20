@@ -1,0 +1,29 @@
+return {
+-- 	{
+-- 		'mfussenegger/nvim-dap',
+-- 		dependencies = {
+-- 			'nvim-neotest/nvim-nio',
+-- 			'rcarriga/nvim-dap-ui',
+-- 			'mfussenegger/nvim-dap-python',
+-- 		},
+-- 		config = function()
+-- 			local dap = require 'dap'
+-- 			local dapui = require 'dapui'
+-- 			local dap_python = require 'dap-python'
+--
+-- 			-- Setup --
+-- 			dapui.setup({})
+-- 			dap_python.setup("python3") -- pip install debugpy in global python3 first
+-- 			vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "", })
+-- 			vim.fn.sign_define("DapBreakpointRejected", { text = "❌", texthl = "DiagnosticSignError", linehl = "", numhl = "", })
+-- 			vim.fn.sign_define("DapStopped", { text = "", texthl = "DiagnosticSignWarn", linehl = "Visual", numhl = "DiagnosticSignWarn", })
+-- 			dap.listeners.before.launch.dapui_config = function ()
+-- 				dapui.open()
+-- 			end
+--
+-- 			-- Keymaps --
+-- 			vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = '[D]ap toggle [B]reakpoint' })
+-- 			vim.keymap.set('n', '<leader>dc', dap.continue, { desc = '[D]ap [C]ontinue' })
+-- 		end,
+-- 	},
+}
