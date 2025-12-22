@@ -47,9 +47,9 @@ return {
 		-- 		:find()
 		-- end
 
-		vim.keymap.set('n', '<leader>a', function()
+		vim.keymap.set('n', '<leader>m', function()
 			harpoon:list():add()
-		end, { desc = 'Add mark' })
+		end, { desc = 'Add harpoon [M]ark' })
 		vim.keymap.set('n', '<C-e>', function()
 			-- toggle_telescope(harpoon:list())
 			harpoon.ui:toggle_quick_menu(harpoon:list())
