@@ -1,5 +1,6 @@
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
+vim.o.termguicolors = true
 
 vim.o.number = true -- Make line numbers default
 vim.o.relativenumber = true

@@ -373,24 +373,24 @@ return {
 	--         }
 	--     end,
 	-- },
-	{ -- code folding
-		"kevinhwang91/nvim-ufo",
-		dependencies = "kevinhwang91/promise-async",
-		config = function()
-			vim.o.foldcolumn = "1"
-			vim.o.foldlevel = 99
-			vim.o.foldlevelstart = 99
-			vim.o.foldenable = true
-
-			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-
-			-- Treesitter as folding provider
-			require("ufo").setup({
-				provider_selector = function(_, _, _)
-					return { "treesitter", "indent" }
-				end,
-			})
-		end,
-	},
+	-- { -- code folding
+	-- 	"kevinhwang91/nvim-ufo",
+	-- 	dependencies = "kevinhwang91/promise-async",
+	-- 	config = function()
+	-- 		vim.o.foldcolumn = "1"
+	-- 		vim.o.foldlevel = 99
+	-- 		vim.o.foldlevelstart = 99
+	-- 		vim.o.foldenable = true
+	--
+	-- 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+	-- 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+	--
+	-- 		-- Treesitter as folding provider
+	-- 		require("ufo").setup({
+	-- 			provider_selector = function(_, _, _)
+	-- 				return { "treesitter", "indent" }
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- },
 }

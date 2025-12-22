@@ -8,7 +8,7 @@ return {
 	keys = {
 		-- 👇 in this section, choose your own keymappings!
 		{
-			'<leader>y',
+			'<leader>yy',
 			mode = { 'n', 'v' },
 			'<cmd>Yazi<cr>',
 			desc = '[Y]azi',
