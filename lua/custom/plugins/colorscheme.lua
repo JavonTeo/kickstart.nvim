@@ -79,35 +79,52 @@ return
 		name = 'kanagawa',
 		priority = 1000,
 		config = function ()
+			local cyan = "#94e2d5"
+			local purple = "#cba6f7"
+			local gray = "#6c7086"
+			local yellow = "#f9e2af"
+			local dark_vanilla = "#d4caa3"
+
 			require("kanagawa").setup({
-				compile = false,  -- enable compiling the colorscheme
-				undercurl = true, -- enable undercurls
-				commentStyle = { italic = true },
-				functionStyle = {},
-				keywordStyle = { italic = true },
-				statementStyle = { bold = true },
-				typeStyle = {},
-				transparent = true,   -- true: set background color
-				dimInactive = true,   -- dim inactive window `:h hl-NormalNC`
-				terminalColors = true, -- define vim.g.terminal_color_{0,17}
-				colors = {             -- add/modify theme and palette colors
-					palette = {},
-					theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-				},
+				-- compile = false,  -- enable compiling the colorscheme
+				-- undercurl = true, -- enable undercurls
+				-- commentStyle = { italic = true },
+				-- functionStyle = {},
+				-- keywordStyle = { italic = true },
+				-- statementStyle = { bold = true },
+				-- typeStyle = {},
+				-- transparent = true,   -- true: set background color
+				-- dimInactive = true,   -- dim inactive window `:h hl-NormalNC`
+				-- terminalColors = true, -- define vim.g.terminal_color_{0,17}
+				-- colors = {             -- add/modify theme and palette colors
+				-- 	palette = {
+				-- 		cyan = "#94e2d5",
+				-- 		purple = "#cba6f7",
+				-- 		gray = "#6c7086",
+				-- 		yellow = "#f9e2af",
+				-- 		dark_vanilla = "#d4caa3",
+				-- 	},
+				-- 	theme = {},
+				-- },
+				    
 				overrides = function(colors) -- add/modify highlights
-					local theme = colors.theme
 					return {
 						-- Normal = { fg = theme , bg = theme },
-						LineNr = { fg = "#f9e2af" },
-						LineNrAbove = { fg = "#6c7086" },
-						LineNrBelow = { fg = "#6c7086" },
-						FzfLuaBorder = { fg = "#d4caa3" },
-						Visual = { fg = "#94e2d5" },
-						-- cyan: #94e2d5, purple: #cba6f7, gray: #6c7086 , yellow: #f9e2af, dark vanilla: #d4caa3
+						-- CursorLineNr = { fg = colors.palette.yellow },
+						-- LineNrAbove = { fg = "#6c7086" },
+						-- LineNrBelow = { fg = "#6c7086" },
+						-- FzfLuaBorder = { fg = "#d4caa3" },
+						-- Visual = { bg = "#94e2d5" },
 					}
 				end,
 			})
 			vim.cmd.colorscheme 'kanagawa-wave' -- toggle between kanagawa-wave, kanagawa-dragon, kanagawa-lotus
+
+			local set = vim.api.nvim_set_hl
+			set(0, 'FzfLuaBorder', { fg = "#d4caa3" })
+			-- set(0, 'LineNrAbove', { fg = "#6c7086" })
+			-- set(0, 'LineNrBelow', { fg = "#6c7086" })
+			-- set(0, 'Visual', { bg = "#94e2d5" })
 		end
 	}
 
