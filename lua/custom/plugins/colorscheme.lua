@@ -106,25 +106,14 @@ return
 				-- 	},
 				-- 	theme = {},
 				-- },
-				    
-				overrides = function(colors) -- add/modify highlights
-					return {
-						-- Normal = { fg = theme , bg = theme },
-						-- CursorLineNr = { fg = colors.palette.yellow },
-						-- LineNrAbove = { fg = "#6c7086" },
-						-- LineNrBelow = { fg = "#6c7086" },
-						-- FzfLuaBorder = { fg = "#d4caa3" },
-						-- Visual = { bg = "#94e2d5" },
-					}
-				end,
 			})
 			vim.cmd.colorscheme 'kanagawa-wave' -- toggle between kanagawa-wave, kanagawa-dragon, kanagawa-lotus
 
+			local colors = require('kanagawa.colors').setup()
+			local palette_colors = colors.palette
 			local set = vim.api.nvim_set_hl
-			set(0, 'FzfLuaBorder', { fg = "#d4caa3" })
-			-- set(0, 'LineNrAbove', { fg = "#6c7086" })
-			-- set(0, 'LineNrBelow', { fg = "#6c7086" })
-			-- set(0, 'Visual', { bg = "#94e2d5" })
+			set(0, 'Visual', { bg = "#283b57" })
+			-- set(0, 'NormalFloat', { fg = palette_colors.dragonAqua, bg = palette_colors.sumiInk6 })
 		end
 	}
 
