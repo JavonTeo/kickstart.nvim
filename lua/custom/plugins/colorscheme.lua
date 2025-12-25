@@ -113,6 +113,10 @@ return
 			local palette_colors = colors.palette
 			local set = vim.api.nvim_set_hl
 			set(0, 'Visual', { bg = "#283b57" })
+
+			-- This sets the colors for the floating windows
+			-- (e.g. LSP function signature when you hover and <Shift-k> over a function, or telescope window)
+			-- set(0, 'NormalFloat', { bg = '#110147', fg = '#fffcea' })        -- floating window background color and font color
 			-- set(0, 'NormalFloat', { fg = palette_colors.dragonAqua, bg = palette_colors.sumiInk6 })
 		end
 	}

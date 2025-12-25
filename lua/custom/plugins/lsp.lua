@@ -317,10 +317,6 @@ return {
 					end,
 				},
 			})
-
-			-- This sets the colors for the floating windows
-			-- (e.g. LSP function signature when you hover and <Shift-k> over a function, or telescope window)
-			vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#110147', fg = '#fffcea' })        -- floating window background color and font color
 		end,
 	},
 	-- { -- formatters, linters
