@@ -63,7 +63,7 @@ return {
 		local builtin = require 'fzf-lua'
 		vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
 		vim.keymap.set('n', '<leader>sf', builtin.global, { desc = '[S]earch [F]iles' })
-		vim.keymap.set('n', '<leader>st', builtin.treesitter, { desc = '[S]earch current [T]reesitter symbols' })
+		-- vim.keymap.set('n', '<leader>st', builtin.treesitter, { desc = '[S]earch current [T]reesitter symbols' })
 		vim.keymap.set('n', '<leader>sw', builtin.grep_cword, { desc = '[S]earch current [W]ord' })
 		vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
 		vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })

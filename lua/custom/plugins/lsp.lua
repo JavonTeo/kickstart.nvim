@@ -8,6 +8,58 @@ return {
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{ "j-hui/fidget.nvim",    opts = {} }, -- Useful status updates for LSP.
 			"saghen/blink.cmp", -- Allows extra capabilities provided by blink.cmp
+			{
+                'p00f/clangd_extensions.nvim',
+                lazy = true,
+                config = function ()
+                    require('clangd_extensions').setup({
+                        inlay_hints = {
+                            inline = vim.fn.has 'nvim-0.10' == 1,
+                            only_current_line = false,
+                            only_current_line_autocmd = { 'CursorHold' },
+                            show_parameter_hints = true,
+                            parameter_hints_prefix = '<- ',
+                            other_hints_prefix = '=> ',
+                            max_len_align = false,
+                            max_len_align_padding = 1,
+                            right_align = false,
+                            right_align_padding = 7,
+                            highlight = 'Comment',
+                            priority = 100,
+                        },
+                        ast = {
+                            role_icons = {
+                                type = '',
+                                declaration = '',
+                                expression = '',
+                                specifier = '',
+                                statement = '',
+                                ['template argument'] = '',
+                            },
+
+                            kind_icons = {
+                                Compound = '',
+                                Recovery = '',
+                                TranslationUnit = '',
+                                PackExpansion = '',
+                                TemplateTypeParm = '',
+                                TemplateTemplateParm = '',
+                                TemplateParamObject = '',
+                            },
+
+                            highlights = {
+                                detail = 'Comment',
+                            },
+                        },
+                        memory_usage = {
+                            border = 'none',
+                        },
+                        symbol_info = {
+                            border = 'none',
+                        },
+                    })
+                end,
+            },
 		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -23,13 +75,15 @@ return {
 					map("grn", vim.lsp.buf.rename, "[R]e[n]ame")
 					map("ga", vim.lsp.buf.code_action, "[G]oto Code [A]ction")
 					map("gr", require("fzf-lua").lsp_references, "[G]oto [R]eferences")
-					map("gri", require("fzf-lua").lsp_implementations, "[G]oto [I]mplementation")
+					map("gI", require("fzf-lua").lsp_implementations, "[G]oto [I]mplementation")
 					map("gd", function() require("fzf-lua").lsp_definitions { jump1 = true } end, "[G]oto [D]efinition") --  To jump back, press <C-t>.
 					map("gD", require("fzf-lua").lsp_declarations, "[G]oto [D]eclaration")
 					-- Jump to the type of the word under your cursor.
 					--  Useful when you're not sure what type a variable is and you want to see
 					--  the definition of its *type*, not where it was *defined*.
 					map("gt", require("fzf-lua").lsp_typedefs, "[G]oto [T]ype Definition")
+					map("st", require("fzf-lua").lsp_document_symbols, "[S]earch [T]reesitter symbols")
+					map('K', vim.lsp.buf.hover, 'Hover Documentation')
 					-- Manual formatting keymap
 					map("<leader>ff", function()
 						vim.lsp.buf.format({ async = true })
@@ -48,22 +102,6 @@ return {
 								vim.log.levels.INFO)
 						end
 					end, "[T]oggle [D]iagnostics")
-
-					-- The following code creates a keymap to toggle inlay hints in your
-					-- code, if the language server you are using supports them
-					--
-					-- This may be unwanted, since they displace some of your code
-					if
-					    client
-					    and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
-					then
-						map("<leader>th", function()
-							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({
-								bufnr =
-								    event.buf
-							}))
-						end, "[T]oggle Inlay [H]ints")
-					end
 
 					-- <Experimental - not currently in use>
 					-- Toggle diagnostics (cycling through different levels)
@@ -179,8 +217,29 @@ return {
 				-- Uncomment the line below to disable ALL diagnostics (including errors)
 				-- enabled = false,
 
-				float = { border = "rounded", source = "if_many" },
-				underline = { severity = vim.diagnostic.severity.ERROR },
+				-- underline = { severity = vim.diagnostic.severity.ERROR },
+				underline = { severity = false },
+				update_in_insert = false,
+				-- Virtual text refers to the diagnostic messages displayed at the end of the line
+				virtual_text = {
+					-- uncomment the line below to show ALL virtual text
+					severity = { min = vim.diagnostic.severity.ERROR }, -- only show virtual text for errors
+					-- severity = { vim.diagnostic.severity.ERROR }, -- only show virtual text for errors
+					-- severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN }, -- show virtual text for errors and warnings
+					spacing = 4,
+					prefix = '●',
+					-- source = "if_many",
+					-- format = function(diagnostic)
+					-- 	local diagnostic_message = {
+					-- 		[vim.diagnostic.severity.ERROR] = diagnostic.message,
+					-- 		[vim.diagnostic.severity.WARN] = diagnostic.message,
+					-- 		[vim.diagnostic.severity.INFO] = diagnostic.message,
+					-- 		[vim.diagnostic.severity.HINT] = diagnostic.message,
+					-- 	}
+					-- 	return diagnostic_message[diagnostic.severity]
+					-- end,
+				},
+				-- float = { border = "rounded", source = "if_many" },
 				signs = vim.g.have_nerd_font
 				    and {
 					    text = {
@@ -190,35 +249,41 @@ return {
 						    [vim.diagnostic.severity.HINT] = "󰌶 ",
 					    },
 					    -- severity = { min = vim.diagnostic.severity.ERROR }, -- only show error signs
-				    }
-				    or {},
-
-				-- Virtual text refers to the diagnostic messages displayed at the end of the line
-				virtual_text = {
-					source = "if_many",
-					spacing = 2,
-					-- uncomment the line below to show ALL virtual text
-					severity = { vim.diagnostic.severity.ERROR }, -- only show virtual text for errors
-					-- severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN }, -- show virtual text for errors and warnings
-					format = function(diagnostic)
-						local diagnostic_message = {
-							[vim.diagnostic.severity.ERROR] = diagnostic.message,
-							[vim.diagnostic.severity.WARN] = diagnostic.message,
-							[vim.diagnostic.severity.INFO] = diagnostic.message,
-							[vim.diagnostic.severity.HINT] = diagnostic.message,
-						}
-						return diagnostic_message[diagnostic.severity]
-					end,
-				},
+				    },
 			})
 
-			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			local vue_language_server_path = vim.fn.stdpath("data")
 			    .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
 
 			local servers = {
-				-- clangd = {},
 				-- gopls = {},
+				clangd = {
+                    filetypes = {
+                        'c',
+                        'cpp',
+                        'objc',
+                        'objcpp',
+                        'cuda',
+                    },
+                    cmd = {
+                        'clangd',
+                        '--background-index',
+                        '--offset-encoding=utf-16',
+                        '--clang-tidy',
+                        '--header-insertion=iwyu',
+                        '--completion-style=detailed',
+                        '--function-arg-placeholders',
+                        '--fallback-style=llvm',
+                        -- '--query-driver=/usr/local/cuda/bin/nvcc',
+                        -- '--query-driver=/usr/bin/c++',
+                    },
+                    init_options = {
+                        usePlaceholders = true,
+                        completeUnimported = true,
+                        clangdFileStatus = true,
+                    },
+                },
+				ruff = {},
 				basedpyright = {
 					analysis = {
 						autoSearchPaths = true,
@@ -244,7 +309,6 @@ return {
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`ts_ls`) will work just fine
-
 				ts_ls = {
 					init_options = {
 						plugins = {
@@ -264,8 +328,6 @@ return {
 						"vue",
 					},
 				},
-
-				ruff = {},
 				emmet_language_server = {},
 				lua_ls = {
 					-- cmd = { ... },
@@ -300,20 +362,38 @@ return {
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
 			})
-			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+			local on_attach = function (client, bufnr)
+				if client.name == 'basedpyright' then
+					client.server_capabilities.semanticTokensProvider = nil
+				end
 
+				if client.name == 'ruff' then
+					-- Disable hover in favor of Pyright
+					client.server_capabilities.hoverProvider = false
+
+					-- Disable formatting
+					client.server_capabilities.documentFormattingProvider = false
+					client.server_capabilities.documentRangeFormattingProvider = false
+				end
+			end
+
+			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			require("mason-lspconfig").setup({
 				ensure_installed = {},
 				automatic_installation = false,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
-						-- This handles overriding only values explicitly passed
-						-- by the server configuration above. Useful when disabling
-						-- certain features of an LSP (for example, turning off formatting for ts_ls)
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities,
-							server.capabilities or {})
-						require("lspconfig")[server_name].setup(server)
+						local server_opts = vim.tbl_deep_extend('force', {
+							-- handles overriding server configs, passing configs defined in capabailities
+							capabilities = vim.deepcopy(capabilities),
+							on_attach = on_attach,
+						}, server)
+						require("lspconfig")[server_name].setup(server_opts)
+						-- server.capabilities = vim.tbl_deep_extend("force", {}, capabilities,
+						-- 	server.capabilities or {})
+						-- require("lspconfig")[server_name].setup(server)
 					end,
 				},
 			})
