@@ -82,7 +82,7 @@ return {
 					--  Useful when you're not sure what type a variable is and you want to see
 					--  the definition of its *type*, not where it was *defined*.
 					map("gt", require("fzf-lua").lsp_typedefs, "[G]oto [T]ype Definition")
-					map("st", require("fzf-lua").lsp_document_symbols, "[S]earch [T]reesitter symbols")
+					map("<leader>st", require("fzf-lua").lsp_document_symbols, "[S]earch [T]reesitter symbols")
 					map('K', vim.lsp.buf.hover, 'Hover Documentation')
 					-- Manual formatting keymap
 					map("<leader>ff", function()
