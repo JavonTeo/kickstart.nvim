@@ -301,7 +301,7 @@ return {
 				html = {},
 				cssls = {},
 				jsonls = {},
-				quick_lint_js = {},
+				biome = {},
 				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
@@ -328,7 +328,7 @@ return {
 						"vue",
 					},
 				},
-				emmet_language_server = {},
+				-- emmet_language_server = {},
 				lua_ls = {
 					-- cmd = { ... },
 					-- filetypes = { ... },
