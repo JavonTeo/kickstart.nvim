@@ -3,12 +3,12 @@ return { -- Highlight, edit, and navigate code
 	dependencies = {
 		'nvim-treesitter/nvim-treesitter-textobjects',
 	},
+	lazy = false,
 	build = ':TSUpdate',
 	branch = 'main',
-	lazy = true,
 	pin = true,
 	config = function()
-		require('nvim-treesitter.configs').setup {
+		require('nvim-treesitter').setup {
 			ensure_installed = {
 				'lua',
 				'python',
@@ -75,8 +75,15 @@ return { -- Highlight, edit, and navigate code
 					scope_incremental = '<c-space>',
 				},
 			},
+			fold = { enable = true },
 		}
 
+		vim.api.nvim_create_autocmd("BufWinEnter", {
+			callback = function ()
+				vim.wo.foldmethod = "expr"
+				vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+			end
+		})
 		-- -- Treesitter folds
 		-- vim.o.foldmethod = 'expr'
 		-- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
