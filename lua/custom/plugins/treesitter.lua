@@ -78,12 +78,12 @@ return { -- Highlight, edit, and navigate code
 			fold = { enable = true },
 		}
 
-		vim.api.nvim_create_autocmd("BufWinEnter", {
-			callback = function ()
-				vim.wo.foldmethod = "expr"
-				vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-			end
-		})
+		-- vim.api.nvim_create_autocmd("BufWinEnter", {
+		-- 	callback = function ()
+		-- 		vim.wo.foldmethod = "expr"
+		-- 		vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		-- 	end
+		-- })
 		-- -- Treesitter folds
 		-- vim.o.foldmethod = 'expr'
 		-- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
