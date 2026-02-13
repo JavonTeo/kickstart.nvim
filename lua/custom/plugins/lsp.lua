@@ -223,9 +223,9 @@ return {
 				-- Virtual text refers to the diagnostic messages displayed at the end of the line
 				virtual_text = {
 					-- uncomment the line below to show ALL virtual text
-					severity = { min = vim.diagnostic.severity.ERROR }, -- only show virtual text for errors
+					-- severity = { min = vim.diagnostic.severity.ERROR }, -- only show virtual text for errors
 					-- severity = { vim.diagnostic.severity.ERROR }, -- only show virtual text for errors
-					-- severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN }, -- show virtual text for errors and warnings
+					severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN }, -- show virtual text for errors and warnings
 					spacing = 4,
 					prefix = '●',
 					-- source = "if_many",
@@ -445,25 +445,5 @@ return {
 	--             end,
 	--         }
 	--     end,
-	-- },
-	-- { -- code folding
-	-- 	"kevinhwang91/nvim-ufo",
-	-- 	dependencies = "kevinhwang91/promise-async",
-	-- 	config = function()
-	-- 		vim.o.foldcolumn = "1"
-	-- 		vim.o.foldlevel = 99
-	-- 		vim.o.foldlevelstart = 99
-	-- 		vim.o.foldenable = true
-	--
-	-- 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-	-- 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-	--
-	-- 		-- Treesitter as folding provider
-	-- 		require("ufo").setup({
-	-- 			provider_selector = function(_, _, _)
-	-- 				return { "treesitter", "indent" }
-	-- 			end,
-	-- 		})
-	-- 	end,
 	-- },
 }
