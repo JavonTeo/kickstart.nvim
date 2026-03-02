@@ -71,6 +71,14 @@ vim.keymap.set(
 )
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
+-- Toggle global diagnostics using Snacks.nvim
+vim.api.nvim_create_autocmd("User", {
+    pattern = "VeryLazy",
+    callback = function()
+        Snacks.toggle.diagnostics():map("<leader>td")
+    end,
+})
+
 -- File navigation settings
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
